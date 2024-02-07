@@ -28,8 +28,8 @@ jobs:
 
       - name: Run Example Workflow
         env: 
-            USERNAME: ${{ secrets.EOIAM_USERNAME}}
-            PASSWORD: ${{ secrets.EOIAM_PASSWORD}}
+            EOIAM_USERNAME: ${{ secrets.EOIAM_USERNAME}}
+            EOIAM_PASSWORD: ${{ secrets.EOIAM_PASSWORD}}
         run: |
             ./download_ers.py ${{ inputs.slc }} 
 
