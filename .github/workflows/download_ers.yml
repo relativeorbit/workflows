@@ -30,7 +30,8 @@ jobs:
           python-version: '3.12' 
           cache: 'pip'
       
-      - run: pip install tqdm requests
+      # cache assumes requirements.txt https://github.com/actions/setup-python/issues/807
+      - run: pip install -r requirements.txt
 
       - name: Download SLC from ESA
         env: 
