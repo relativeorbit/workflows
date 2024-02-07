@@ -13,16 +13,15 @@ import sys
 import requests
 from urllib.parse import urlparse, parse_qs, quote_plus
 from time import sleep
+from tqdm import tqdm
 
 # GitHub Actions Log-friendly Progress Bar
-#from tqdm import tqdm
-import logging
-import datetime
-from tqdm_loggable.auto import tqdm
-from tqdm_loggable.tqdm_logging import tqdm_logging
-
-logger = logging.getLogger(__name__)
-tqdm_logging.set_log_rate(datetime.timedelta(seconds=30)) 
+# import logging
+# import datetime
+# from tqdm_loggable.auto import tqdm
+# from tqdm_loggable.tqdm_logging import tqdm_logging
+# logger = logging.getLogger(__name__)
+# tqdm_logging.set_log_rate(datetime.timedelta(seconds=30)) 
 
 def login():
     print('Logging in...')
@@ -62,7 +61,7 @@ def _dl_file(session, url, outdir, override=False, progressbar=False):
         raise FileExistsError('%s already exists. Skipping...' % filename)
     length = int(r.headers['Content-Length'])
     if progressbar:
-        progress = tqdm(total=length, unit='B', unit_scale=True)
+        progress = tqdm(total=length, unit='B', unit_scale=True, mininterval=30)
     outfile = os.path.join(outdir, filename)
     with open(outfile, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024*1024):
@@ -97,7 +96,7 @@ def request_download(session, product_id, outdir='./', override=False, progressb
         if progressbar:
             print('The order is being processed by ESA '
                 'and will be ready in {} seconds.'.format(retry_after))
-            progress = tqdm(total=retry_after)
+            progress = tqdm(total=retry_after, mininterval=30)
         for i in range(retry_after):
             sleep(1)
             if progressbar:
