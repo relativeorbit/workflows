@@ -64,7 +64,7 @@ def _dl_file(session, url, outdir, override=False, progressbar=False):
 
 
 def request_download(session, product_id, outdir='./', override=False,
-                     progressbar=True):
+                     progressbar=False):
     """Request download to ESA and interpret the response."""
     if 'SAR_IMS_1P' in product_id:
         product_url = f'https://esar-ds.eo.esa.int/oads/data/SAR_IMS_1P/{product_id}'
