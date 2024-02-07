@@ -1,4 +1,5 @@
 name: DownloadERS
+run-name: Download ${{ inputs.slc }} 
 
 on:
   workflow_dispatch:
@@ -9,8 +10,10 @@ on:
         description: ERS SLC
         default: SAR_IMS_1PNESA19970824_185716_00000015A024_00385_12263_0000.E2
 
-env:
-  TQDM_POSITION: -1
+# https://github.com/tqdm/tqdm/issues/966#issuecomment-1671157103 
+# Trying to make progress bar not spam log, for now disable
+#env:
+#  TQDM_POSITION: -1
 
 jobs:
   download_ers_slc:
@@ -24,19 +27,25 @@ jobs:
       
       - uses: actions/setup-python@v5
         with:
+          python-version: '3.12' 
           cache: 'pip'
       
       - run: pip install tqdm requests
 
-      - name: Run Example Workflow
+      - name: Download SLC from ESA
         env: 
             EOIAM_USERNAME: ${{ secrets.EOIAM_USERNAME}}
             EOIAM_PASSWORD: ${{ secrets.EOIAM_PASSWORD}}
         run: |
             ./download_ers.py ${{ inputs.slc }} 
 
-      - name: Upload Hyp3 Output
+      - name: Store SLC as Artifact
+        id: artifact-upload-step
         uses: actions/upload-artifact@v4
         with:
             name: ${{ inputs.slc }} 
             path: ${{ inputs.slc }} 
+
+      # https://github.com/actions/upload-artifact/issues/50#issuecomment-1885368978
+      - name: Output artifact URL
+        run:  echo 'Artifact URL is ${{ steps.artifact-upload-step.outputs.artifact-url }}
