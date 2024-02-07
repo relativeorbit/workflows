@@ -1,0 +1,40 @@
+name: DownloadERS
+
+on:
+  workflow_dispatch:
+    inputs:
+      slc:
+        type: string
+        required: true
+        description: ERS SLC
+        default: SAR_IMS_1PNESA19970824_185716_00000015A024_00385_12263_0000.E2
+        
+
+jobs:
+  download_ers_slc:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          cache: 'pip'
+      
+      - run: pip install tqdm requests
+
+      - name: Run Example Workflow
+        env: 
+            USERNAME: ${{ secrets.EOIAM_USERNAME}}
+            PASSWORD: ${{ secrets.EOIAM_PASSWORD}}
+        run: |
+            ./download_ers.py ${{ inputs.slc }} 
+
+      - name: Upload Hyp3 Output
+        uses: actions/upload-artifact@v4
+        with:
+            name: ${{ inputs.slc }} 
+            path: ${{ inputs.slc }} 
