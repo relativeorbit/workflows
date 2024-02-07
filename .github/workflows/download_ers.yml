@@ -10,11 +10,6 @@ on:
         description: ERS SLC
         default: SAR_IMS_1PNESA19970824_185716_00000015A024_00385_12263_0000.E2
 
-# https://github.com/tqdm/tqdm/issues/966#issuecomment-1671157103 
-# Trying to make progress bar not spam log, for now disable
-#env:
-#  TQDM_POSITION: -1
-
 jobs:
   download_ers_slc:
     runs-on: ubuntu-latest

@@ -11,7 +11,16 @@ import sys
 import requests
 from urllib.parse import urlparse, parse_qs, quote_plus
 from time import sleep
-from tqdm import tqdm
+
+# Better GitHub Actions
+#from tqdm import tqdm
+import logging
+import datetime
+from tqdm_loggable.auto import tqdm
+from tqdm_loggable.tqdm_logging import tqdm_logging
+
+logger = logging.getLogger(__name__)
+tqdm_logging.set_log_rate(datetime.timedelta(seconds=30)) 
 
 def login():
     print('Logging in...')
