@@ -44,4 +44,4 @@ jobs:
 
       # https://github.com/actions/upload-artifact/issues/50#issuecomment-1885368978
       - name: Output artifact URL
-        run:  echo 'Artifact URL is ${{ steps.artifact-upload-step.outputs.artifact-url }}
+        run:  echo 'Artifact URL is ${{ steps.artifact-upload-step.outputs.artifact-url }}'
