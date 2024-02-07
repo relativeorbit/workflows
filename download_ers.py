@@ -5,6 +5,8 @@ Download ERS SLCs from ESA (https://esar-ds.eo.esa.int/oads/data/SAR_IMS_1P/)
 USAGE: ./download_asar.py SAR_IMS_1PNESA20041016_061715_00000015A099_00163_49616_0000.E2 
 
 Assumes env vars for loging present https://esar-ds.eo.esa.int
+
+Modified from https://github.com/yannforget/asarapi
 """
 import os 
 import sys
@@ -12,7 +14,7 @@ import requests
 from urllib.parse import urlparse, parse_qs, quote_plus
 from time import sleep
 
-# Better GitHub Actions
+# GitHub Actions Log-friendly Progress Bar
 #from tqdm import tqdm
 import logging
 import datetime
@@ -72,14 +74,15 @@ def _dl_file(session, url, outdir, override=False, progressbar=False):
         progress.close()
 
 
-def request_download(session, product_id, outdir='./', override=False,
-                     progressbar=False):
+def request_download(session, product_id, outdir='./', override=False, progressbar=False):
     """Request download to ESA and interpret the response."""
     if 'SAR_IMS_1P' in product_id:
         product_url = f'https://esar-ds.eo.esa.int/oads/data/SAR_IMS_1P/{product_id}'
     # NOTE: need application to access raw data https://esatellus.service-now.com/csp?id=dsr&dataset=SAR_IM_0P
     elif 'SAR_IM__0P' in product_id:
         product_url = f'https://esar-ds.eo.esa.int/oads/data/SAR_IM__0P_Scenes/{product_id}'
+
+    print(f'Downloading {product_url}...')
     r = session.get(product_url, stream=True)
 
     # Product is not available
@@ -113,4 +116,4 @@ def request_download(session, product_id, outdir='./', override=False,
 if __name__ == '__main__':
     productid = sys.argv[1]
     session = login()
-    request_download(session, productid)
+    request_download(session, productid, progressbar=True)
