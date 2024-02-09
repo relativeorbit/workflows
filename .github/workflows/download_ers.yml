@@ -12,6 +12,7 @@ on:
 
 jobs:
   download_ers_slc:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     defaults:
       run:
