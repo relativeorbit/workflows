@@ -9,17 +9,28 @@ on:
         required: true
         description: ERS SLC
         default: SAR_IMS_1PNESA19970824_185716_00000015A024_00385_12263_0000.E2
+      runner_name:
+        type: string
+        required: true
+        description: GitHub Runner Name
+        default: ubuntu-latest
 
 jobs:
   download_ers_slc:
     timeout-minutes: 30
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner_name }} 
     defaults:
       run:
         shell: bash -el {0}
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Report Runner Specs
+        run: | 
+          lscpu 
+          free -h 
+          df -h
       
       - uses: actions/setup-python@v5
         with:
