@@ -1,0 +1,12 @@
+<topsAppDenseAmpcor>
+<!--See https://github.com/isce-framework/isce2/blob/main/components/mroipac/ampcor/DenseAmpcor.py -->
+<component name="dense">
+<property name="WINDOW_SIZE_WIDTH">32</property>
+<property name="WINDOW_SIZE_HEIGHT">16</property>
+<property name="SEARCH_WINDOW_SIZE_WIDTH">16</property>
+<property name="SEARCH_WINDOW_SIZE_HEIGHT">16</property>
+<property name="SKIP_SAMPLE_ACROSS">20</property>
+<property name="SKIP_SAMPLE_DOWN">4</property>
+<property name="ZOOM_WINDOW_SIZE">16</property>
+</component>
+</topsAppDenseAmpcor>
