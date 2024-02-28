@@ -52,6 +52,9 @@ jobs:
       run: ls -R
 
     - name: Merge Bursts
+      env: 
+        EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
+        EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD}}
       run: |
         python -m hyp3_isce2 ++process merge_tops_bursts \
             ./ \
