@@ -40,7 +40,7 @@ jobs:
       uses: mamba-org/setup-micromamba@v1
       with:
         cache-environment: true
-        environment-file: conda-lock-hyp3-isce2.yml
+        environment-file: conda-lock.yml
         environment-name: hyp3-isce2
     
     - name: Retrieve artifacts
