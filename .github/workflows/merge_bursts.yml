@@ -40,11 +40,13 @@ jobs:
       uses: mamba-org/setup-micromamba@v1
       with:
         cache-environment: true
-        environment-file: conda-lock.yml
+        environment-file: hyp3.conda-lock.yml
         environment-name: hyp3-isce2
     
     - name: Retrieve artifacts
       uses: actions/download-artifact@v4
+      with:
+        merge-multiple: true
     
     - name: Display structure of downloaded files
       run: ls -R
@@ -61,4 +63,4 @@ jobs:
         name: merged
         # Exclude redundant zipped output folder from hyp3-isce2
         path: |
-            S1_*__)*
+            S1_*__*
