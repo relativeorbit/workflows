@@ -1,0 +1,64 @@
+name: Merge Bursts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  hyp3-isce2:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - reference: S1_136232_IW2_20200616T022316_VV_5D11-BURST
+            secondary: S1_136232_IW2_20200604T022315_VV_7C85-BURST
+          - reference: S1_136231_IW2_20200616T022313_VV_5D11-BURST
+            secondary: S1_136231_IW2_20200604T022312_VV_7C85-BURST
+          - reference: S1_136230_IW2_20200616T022311_VV_5D11-BURST
+            secondary: S1_136230_IW2_20200604T022310_VV_7C85-BURST 
+    uses: ./.github/workflows/hyp3-isce2_burst.yml
+    with:
+      reference: ${{ matrix.reference }}
+      secondary: ${{ matrix.secondary }} 
+      looks: 20x4
+      apply_water_mask: false
+      workflow_name: ${{ matrix.reference }}_${{ matrix.secondary }}
+    secrets: inherit
+
+  # Retrieve output artifacts and merge
+  merge-bursts:
+    needs: hyp3-isce2
+    defaults:
+      run:
+          shell: bash -el {0}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Install Conda environment with Micromamba
+      uses: mamba-org/setup-micromamba@v1
+      with:
+        cache-environment: true
+        environment-file: conda-lock-hyp3-isce2.yml
+        environment-name: hyp3-isce2
+    
+    - name: Retrieve artifacts
+      uses: actions/download-artifact@v4
+    
+    - name: Display structure of downloaded files
+      run: ls -R
+
+    - name: Merge Bursts
+      run: |
+        python -m hyp3_isce2 ++process merge_tops_bursts \
+            ./ \
+            --apply-water-mask False
+
+    - name: Upload Merged Bursts
+      uses: actions/upload-artifact@v4
+      with:
+        name: merged
+        # Exclude redundant zipped output folder from hyp3-isce2
+        path: |
+            S1_*__)*
