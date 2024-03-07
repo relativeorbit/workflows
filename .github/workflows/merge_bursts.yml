@@ -2,6 +2,13 @@ name: Merge Bursts
 
 on:
   workflow_dispatch:
+    inputs:
+      looks:
+        type: choice
+        required: true
+        description: Range x Azimuth Looks
+        default: 20x4
+        options: ['20x4', '10x2', '5x1']
 
 jobs:
   hyp3-isce2:
@@ -19,7 +26,7 @@ jobs:
     with:
       reference: ${{ matrix.reference }}
       secondary: ${{ matrix.secondary }} 
-      looks: 20x4
+      looks: ${{ inputs.looks }} 
       apply_water_mask: false
       workflow_name: ${{ matrix.reference }}_${{ matrix.secondary }}
     secrets: inherit
