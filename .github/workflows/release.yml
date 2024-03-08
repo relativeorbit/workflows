@@ -36,5 +36,5 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         tag: ${{ inputs.tag }}
-        artifacts: "*.tif,*.txt"
+        artifacts: "**.tif,**.txt"
         body: "a test release"
