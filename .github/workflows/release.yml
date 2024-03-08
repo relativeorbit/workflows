@@ -23,8 +23,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    # NOTE: GH_PAT required to access artifacts from another workflow
     - uses: actions/download-artifact@v4
       with:
+        name: merged
+        github-token: ${{ secrets.GH_PAT }}
         run-id: ${{ inputs.runid }}
 
     - name: List current directory
