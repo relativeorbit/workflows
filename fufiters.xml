@@ -2,8 +2,8 @@
 <topsApp>
   <component name="topsinsar">
     <!-- <property name="offset geocode list">['merged/filt_dense_offsets.bil','merged/dense_offsets_snr.bil']</property> -->
-    <property name="Ampcor window width">32</property> 
-    <property name="Ampcor window height">6</property> 
+    <property name="Ampcor window width">64</property> 
+    <property name="Ampcor window height">12</property> 
     <property name="Ampcor search window width">30</property> 
     <property name="Ampcor search window height">10</property> 
     <property name="Ampcor skip width">20</property> 
