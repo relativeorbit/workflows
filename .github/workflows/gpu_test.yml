@@ -7,7 +7,8 @@ jobs:
   test-gpu:
     timeout-minutes: 5
     # https://azuremarketplace.microsoft.com/en-us/marketplace/apps/nvidia.ngc_azure_17_11
-    runs-on: gpu
+    runs-on:
+      group: gpu
 
     steps:
       - uses: actions/checkout@v4
