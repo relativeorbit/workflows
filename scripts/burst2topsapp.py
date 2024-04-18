@@ -18,6 +18,7 @@ import subprocess
 import shapely
 from burst2safe.burst2safe import burst2safe
 import eof
+import os
 
 def search_asf(wkt, absoluteOrbit, polarization):
     print(f'Searching ASF for {absoluteOrbit} bursts...')
@@ -81,7 +82,8 @@ def main():
 
     print('Constructing SAFE files...')
     burst2safe(granules=reference_bursts)
-    burst2safe(granules=secondary_bursts)
+    print(os.listdir())
+    #burst2safe(granules=secondary_bursts)
     # Find SAFEs in current directory and sort ascending by datetime string
     safes = glob.glob('*SAFE')
     safes.sort(key = lambda x: x.split('_')[5])
