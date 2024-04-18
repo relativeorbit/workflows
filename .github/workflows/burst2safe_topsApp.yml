@@ -34,6 +34,7 @@ on:
 
 jobs:
     burst2safe:
+      continue-on-error: true
       name: ${{ inputs.workflow_name }}
       runs-on: ubuntu-latest
       env: 
