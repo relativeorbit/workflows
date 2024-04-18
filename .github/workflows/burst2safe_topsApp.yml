@@ -72,6 +72,11 @@ jobs:
               --wkt "${{ inputs.polygon }}" \
               --pol ${{ inputs.polarization }} \
 
+        - name: DEBUG
+          run: |
+            pwd
+            ls -tlrh 
+
         - name: Run ISCE2 TopsApp.py
           run: |
             export PATH=$PATH:$ISCE_HOME/applications
