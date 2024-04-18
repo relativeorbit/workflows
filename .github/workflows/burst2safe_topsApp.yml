@@ -69,7 +69,7 @@ jobs:
             ./scripts/burst2topsapp.py \
               --reference ${{ inputs.reference }} \
               --secondary ${{ inputs.secondary }} \
-              --wkt ${{ inputs.polygon }} \
+              --wkt "${{ inputs.polygon }}" \
               --pol ${{ inputs.polarization }} \
 
         # TODO: must populate XML with SAFEs
