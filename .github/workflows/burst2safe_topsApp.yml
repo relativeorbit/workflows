@@ -36,12 +36,6 @@ jobs:
     burst2safe:
       name: ${{ inputs.workflow_name }}
       runs-on: ubuntu-latest
-      env: 
-        # NOTE: be sure to share Organization Secrets with this repository
-        EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
-        EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD}}
-        ESA_USERNAME: ${{ secrets.ESA_USERNAME }}
-        ESA_PASSWORD: ${{ secrets.ESA_PASSWORD}}
       defaults:
         run:
             shell: bash -el {0}
@@ -63,21 +57,26 @@ jobs:
           with:
             cache-environment: true
             environment-file: environment-burst2safe.yml
+
+        # NOTE: not ideal. maybe use earthaccess python library?
+        - name: Configure NASA & ESA NETRC
+          env: 
+            EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
+            EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD}}
+            ESA_USERNAME: ${{ secrets.ESA_USERNAME }}
+            ESA_PASSWORD: ${{ secrets.ESA_PASSWORD}}
+          run: |
+            echo "machine urs.earthdata.nasa.gov login $EARTHDATA_USER password $EARTHDATA_PASS" > ~/.netrc
+            echo "machine dataspace.copernicus.eu login $ESA_USERNAME password $ESA_PASSWORD" >> ~/.netrc
+            chmod 0600 ~/.netrc
         
         - name: Prepare ISCE2 TopsApp.py
-          continue-on-error: true
           run: |
             ./scripts/burst2topsapp.py \
               --reference ${{ inputs.reference }} \
               --secondary ${{ inputs.secondary }} \
               --wkt "${{ inputs.polygon }}" \
               --pol ${{ inputs.polarization }} \
-
-        - name: DEBUG
-          run: |
-            pwd
-            ls -tlrh 
-            ls *
 
         - name: Run ISCE2 TopsApp.py
           run: |
