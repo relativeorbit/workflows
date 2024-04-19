@@ -66,7 +66,7 @@ jobs:
             ESA_USERNAME: ${{ secrets.ESA_USERNAME }}
             ESA_PASSWORD: ${{ secrets.ESA_PASSWORD}}
           run: |
-            echo "machine urs.earthdata.nasa.gov login $EARTHDATA_USER password $EARTHDATA_PASS" > ~/.netrc
+            echo "machine urs.earthdata.nasa.gov login $EARTHDATA_USERNAME password $EARTHDATA_PASSWORD" > ~/.netrc
             echo "machine dataspace.copernicus.eu login $ESA_USERNAME password $ESA_PASSWORD" >> ~/.netrc
             chmod 0600 ~/.netrc
         
