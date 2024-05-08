@@ -1,0 +1,25 @@
+name: CondaTest
+
+on:
+  workflow_dispatch:
+
+jobs:
+    conda-test:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                shell: bash -el {0}
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Install Conda environment with Micromamba
+              uses: mamba-org/setup-micromamba@v1
+              with:
+                cache-environment: true
+                environment-file: https://raw.githubusercontent.com/relativeorbit/workflows/main/hyp3.conda-lock.yml
+                environment-name: hyp3-isce2
+           
+            - name: List conda envs
+              run: conda info -e
