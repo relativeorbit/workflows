@@ -66,12 +66,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
+        with:
+          # Ensure this repo w/ env files and scripts is checked out when called from another workflow
+          repository: relativeorbit/workflows
+          
       - name: Install Conda environment with Micromamba
         uses: mamba-org/setup-micromamba@v1
         with:
           cache-environment: true
-          environment-file: https://raw.githubusercontent.com/relativeorbit/workflows/main/hyp3.conda-lock.yml
+          environment-file: hyp3.conda-lock.yml
           environment-name: hyp3-isce2
 
       # https://words.yuvi.in/post/python-in-github-actions/
