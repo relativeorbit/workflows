@@ -14,12 +14,17 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
 
+            # mamba-org/setup-micromamba@v1 requires a local file
+            - name: Pull Remote Conda Environment Definition
+              continue-on-error: true 
+              run: |
+                wget https://raw.githubusercontent.com/relativeorbit/workflows/main/hyp3.conda-lock.yml -O /tmp/conda-lock.yml
+
             - name: Install Conda environment with Micromamba
               uses: mamba-org/setup-micromamba@v1
               with:
-                #cache-environment: true
-                #environment-file: https://raw.githubusercontent.com/relativeorbit/workflows/main/hyp3.conda-lock.yml
-                environment-file: https://raw.githubusercontent.com/relativeorbit/workflows/main/environment-burst2safe.yml
+                cache-environment: true
+                environment-file: /tmp/conda-lock.yml
                 environment-name: hyp3-isce2
            
             - name: List conda envs
