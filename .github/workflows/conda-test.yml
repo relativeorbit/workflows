@@ -17,7 +17,7 @@ jobs:
             - name: Install Conda environment with Micromamba
               uses: mamba-org/setup-micromamba@v1
               with:
-                cache-environment: true
+                #cache-environment: true
                 #environment-file: https://raw.githubusercontent.com/relativeorbit/workflows/main/hyp3.conda-lock.yml
                 environment-file: https://raw.githubusercontent.com/relativeorbit/workflows/main/environment-burst2safe.yml
                 environment-name: hyp3-isce2
