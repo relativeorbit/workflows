@@ -71,7 +71,7 @@ jobs:
           repository: relativeorbit/workflows
           
       - name: Install Conda environment with Micromamba
-        uses: mamba-org/setup-micromamba@v1
+        uses: mamba-org/setup-micromamba@v2
         with:
           cache-environment: true
           environment-file: hyp3.conda-lock.yml
